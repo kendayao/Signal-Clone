@@ -12,8 +12,6 @@ const LoginScreen = ({navigation}) => {
         const unsubscribe = auth.onAuthStateChanged((authUser)=>{
             if(authUser){
                 navigation.replace('Home')
-            }else{
-                navigation.navigate('Login')
             }
         })
         return()=>{
@@ -24,8 +22,9 @@ const LoginScreen = ({navigation}) => {
     
 
     const signIn=()=>{
-
+        auth.signInWithEmailAndPassword(email, password).catch(error=>alert(error))
     }
+
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <StatusBar style='light'/>
@@ -36,7 +35,7 @@ const LoginScreen = ({navigation}) => {
             />
             <View style={styles.inputContainer}>
                 <Input placeholder='Email' autoFocus type="email" value={email} onChangeText={(text)=>setEmail(text)}/>
-                <Input placeholder='Password' secureTextEntry type="password" value={password} onChangeText={(text)=>setPassword(text)}/>
+                <Input placeholder='Password' secureTextEntry type="password" value={password} onChangeText={(text)=>setPassword(text)} onSubmitEditing={signIn}/>
             </View>
             <Button containerStyle={styles.button} onPress={signIn} title='Login' />
             <Button onPress={()=>navigation.navigate('Register')} containerStyle={styles.button} type='outline' title='Register' />
