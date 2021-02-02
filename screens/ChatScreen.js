@@ -1,18 +1,20 @@
-import React, { useLayoutEffect, useState } from 'react'
-import { TouchableOpacity } from 'react-native'
-import { StyleSheet, Text, View, TextInput } from 'react-native'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet,ScrollView, Text, View, TextInput } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import {AntDesign, FontAwesome, Ionicons} from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { KeyboardAvoidingView } from 'react-native'
 import { Platform } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
-
+import { Keyboard } from 'react-native'
+import { auth, db } from '../firebase'
+import * as firebase from 'firebase'
 
 const ChatScreen = ({navigation, route}) => {
 
     const [input, setInput] = useState('')
+    const [messages, setMessages]= useState([])
 
     useLayoutEffect(()=>{
         navigation.setOptions({
@@ -50,8 +52,29 @@ const ChatScreen = ({navigation, route}) => {
         })
     },[navigation])
 
-    const sendMessage=()=>{
+    useEffect(()=>{
+        const unsubscribe=db.collection('chats').doc(route.params.id).collection('messages').orderBy('timestamp', 'desc').onSnapshot((snapshot)=>setMessages(
+            snapshot.docs.map(doc=>({
+                id: doc.id,
+                data: doc.data()
+            }))
+        ))
 
+        return ()=>unsubscribe()
+    },[route])
+
+    const sendMessage=()=>{
+        Keyboard.dismiss();
+
+        db.collection('chats').doc(route.params.id).collection('messages').add({
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            message: input,
+            displayName: auth.currentUser.displayName,
+            email: auth.currentUser.email,
+            photoURL: auth.currentUser.photoURL
+        })
+
+        setInput('')
     }
 
     return (
@@ -62,17 +85,31 @@ const ChatScreen = ({navigation, route}) => {
                 style={styles.container}
                 keyboardVerticalOffset={90}
             >
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <>
                     <ScrollView>
-
+                        {messages.map((message)=>(
+                            message.data.email===auth.currentUser.email?(
+                                <View key={id} style={styles.receiver}>
+                                    <Avatar />
+                                    <Text style={styles.receiverText}>{message.data.message}</Text>
+                                </View>
+                            ):(
+                                <View style={styles.sender}>
+                                     <Avatar />
+                                    <Text style={styles.senderText}>{message.data.message}</Text>
+                                </View>
+                            )
+                        ))}
                     </ScrollView>
                     <View style={styles.footer}>
-                        <TextInput value={input} onChangeText={text=>setInput(text)} placeholder='Signal Message' style={styles.textInput}/>
+                        <TextInput value={input} onChangeText={text=>setInput(text)} onSubmitEditing={sendMessage} placeholder='Signal Message' style={styles.textInput}/>
                         <TouchableOpacity activeOpacity={0.5} onPress={sendMessage}> 
                             <Ionicons name='send' size={24} color='#2B68E6'/>
                         </TouchableOpacity>
                     </View>
                 </>
+                </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
         </SafeAreaView>
     )
