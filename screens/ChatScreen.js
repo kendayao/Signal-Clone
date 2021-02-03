@@ -90,7 +90,7 @@ const ChatScreen = ({navigation, route}) => {
                     <ScrollView>
                         {messages.map((message)=>(
                             message.data.email===auth.currentUser.email?(
-                                <View key={id} style={styles.receiver}>
+                                <View key={message.id} style={styles.receiver}>
                                     <Avatar />
                                     <Text style={styles.receiverText}>{message.data.message}</Text>
                                 </View>
@@ -120,6 +120,25 @@ export default ChatScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    receiver:{
+        padding: 15,
+        backgroundColor: '#ECECEC',
+        alignSelf: 'flex-end',
+        borderRadius: 20,
+        marginRight: 15,
+        marginBottom: 20,
+        maxWidth: '80%',
+        position: 'relative'
+    },
+    sender:{
+        padding: 15,
+        backgroundColor: '#2B68E6',
+        alignSelf: 'flex-start',
+        borderRadius: 20,
+        margin: 15,
+        maxWidth: '80%',
+        position: 'relative',
     },
     footer:{
         flexDirection: 'row',
