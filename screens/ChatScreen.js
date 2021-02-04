@@ -87,16 +87,46 @@ const ChatScreen = ({navigation, route}) => {
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <>
-                    <ScrollView>
+                    <ScrollView contentContainerStyle={{paddingTop: 15}}>
                         {messages.map((message)=>(
                             message.data.email===auth.currentUser.email?(
                                 <View key={message.id} style={styles.receiver}>
-                                    <Avatar />
+                                    <Avatar 
+                                        rounded
+                                        position='absolute'
+                                        // styling for web
+                                        containerStyle={{
+                                            position:'absolute',
+                                            bottom: -15,
+                                            right: -5,
+                                        }}
+                                        bottom={-15}
+                                        right={-5}
+                                        size={30}
+                                        source={{
+                                            uri: message.data.photoURL
+                                        }}
+                                    />
                                     <Text style={styles.receiverText}>{message.data.message}</Text>
                                 </View>
                             ):(
                                 <View style={styles.sender}>
-                                     <Avatar />
+                                     <Avatar 
+                                        rounded
+                                        position='absolute'
+                                         // styling for web
+                                         containerStyle={{
+                                            position:'absolute',
+                                            bottom: -15,
+                                            right: -5,
+                                        }}
+                                        bottom={-15}
+                                        right={-5}
+                                        size={30}
+                                        source={{
+                                            uri: message.data.photoURL
+                                        }}
+                                     />
                                     <Text style={styles.senderText}>{message.data.message}</Text>
                                 </View>
                             )
@@ -139,6 +169,18 @@ const styles = StyleSheet.create({
         margin: 15,
         maxWidth: '80%',
         position: 'relative',
+    },
+    senderText: {
+        marginBottom: 15,
+        marginLeft: 10,
+        fontWeight: '500',
+        color: 'white',
+    },
+    senderName: {
+        left: 10,
+        paddingRight: 10,
+        fontSize: 10,
+        color: 'white',
     },
     footer:{
         flexDirection: 'row',
