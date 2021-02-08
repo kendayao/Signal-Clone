@@ -24,7 +24,7 @@ const ChatScreen = ({navigation, route}) => {
             headerTitle: ()=>(
                 <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                     <Avatar rounded source={{
-                        uri: 'https:cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png'
+                        uri: messages[0]?.data.photoURL||'https:cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png'
                     }}/>
                     <Text style={{color: 'white', marginLeft: 10, fontWeight:'700'}}>{route.params.chatName}</Text>
                 </View>
@@ -50,7 +50,7 @@ const ChatScreen = ({navigation, route}) => {
                 </View>
             )
         })
-    },[navigation])
+    },[navigation, messages])
 
     useEffect(()=>{
         const unsubscribe=db.collection('chats').doc(route.params.id).collection('messages').orderBy('timestamp', 'desc').onSnapshot((snapshot)=>setMessages(
