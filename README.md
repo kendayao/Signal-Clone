@@ -2,6 +2,7 @@
 
 ## Description
 
+Chat with friends and family with this signal clone built using react native. 
 
 
 ## Table of Contents
@@ -22,16 +23,18 @@
 - React Native
 - React Hooks
 - Firebase (user authentication/hosting)
+- Expo.io
 
 
 ## User Story
 
 ## Installation
 
-npm install in root folder to install dependancies for backend and frontend.
+No installation needed
 
 ## Usage
 
+Login to an existing account or register a new account. On the homechat screen, click on any existing chat to enter chat room and start chatting. To create a new chat, click on the upper right pencil icon. Click on create new chat and click on the chat name to start chatting. Click on avatar on the upper left to sign out.
 
 ## License
 
@@ -55,10 +58,8 @@ For any questions, please contact kendayao at kendayao@gmail.com
 
 Deployed web application link: https://signal-clone-53de0.web.app
 
-Deployed mobile application: 
-
 Video demo link: 
 
-<img src="client/public/images/swifts-main-image.png" width="650" height="400">
+<img src="assets/signal-clone.png" width="300" height="600">
 
 
