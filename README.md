@@ -58,7 +58,7 @@ For any questions, please contact kendayao at kendayao@gmail.com
 
 Deployed web application link: https://signal-clone-53de0.web.app
 
-Video demo link: 
+Video demo link: https://giphy.com/gifs/NHq2RvoTLIgQrfVGQc/fullscreen
 
 <img src="assets/signal-clone.png" width="300" height="600">
 
