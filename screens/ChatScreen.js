@@ -53,7 +53,7 @@ const ChatScreen = ({navigation, route}) => {
     },[navigation, messages])
 
     useEffect(()=>{
-        const unsubscribe=db.collection('chats').doc(route.params.id).collection('messages').orderBy('timestamp', 'desc').onSnapshot((snapshot)=>setMessages(
+        const unsubscribe=db.collection('chats').doc(route.params.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot)=>setMessages(
             snapshot.docs.map(doc=>({
                 id: doc.id,
                 data: doc.data()
