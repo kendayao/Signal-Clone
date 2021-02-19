@@ -36,6 +36,10 @@ const LoginScreen = ({navigation}) => {
             <View style={styles.inputContainer}>
                 <Input placeholder='Email' autoFocus type="email" value={email} onChangeText={(text)=>setEmail(text)}/>
                 <Input placeholder='Password' secureTextEntry type="password" value={password} onChangeText={(text)=>setPassword(text)} onSubmitEditing={signIn}/>
+                <View style={styles.loginTextContainer}>
+                    <Text style={styles.loginText}>*You may sign in using test credentials below or register your own account*</Text>
+                    <Text style={styles.loginText}>email: cool_coder@email.com password: 12341234</Text>
+                </View>
             </View>
             <Button containerStyle={styles.button} onPress={signIn} title='Login' />
             <Button onPress={()=>navigation.navigate('Register')} containerStyle={styles.button} type='outline' title='Register' />
@@ -62,5 +66,10 @@ const styles = StyleSheet.create({
     button:{
         width: 200,
         marginTop: 10,
+    },
+    loginText:{
+        color: 'gray',
+        textAlign: 'center'
     }
+
 })
